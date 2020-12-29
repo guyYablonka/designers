@@ -1,0 +1,46 @@
+.authentication__header {
+  color: white;
+  text-align: center;
+}
+
+.authentication {
+  width: 90%;
+  max-width: 25rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll-form {
+  height: 20vh;
+  overflow: auto;
+}
+
+.authentication form {
+  margin-bottom: 1rem;
+}
+
+.switch-buttons {
+  font-weight: bold;
+  font-size: 120%;
+  background-color: #ffc48a;
+}
+
+.switch-buttons:hover {
+  background-color: #ffc48a;
+  border-color: #ffc48a;
+}
+
+.switch-buttons:active {
+  background-color: #292b2c;
+}
+
+.submit-button {
+  background-color: #ffc48a;
+  border-color: #ffc48a;
+}

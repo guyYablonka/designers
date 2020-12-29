@@ -1,0 +1,17 @@
+.category-style {
+  font-size: 8vw;
+  transition: 0.3s;
+  color: #404040;
+}
+
+.category-style:hover {
+  font-size: 10vw;
+  color: #ffb266;
+  transition: 0.3s;
+}
+
+.category-style-clicked {
+  font-size: 10vw;
+  color: #ffb266;
+  transition: 0.3s;
+}

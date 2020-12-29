@@ -1,0 +1,31 @@
+.side-drawer {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 22rem;
+  background: #4e4d4d;
+  z-index: 50;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+}
+
+.slide-in-right-enter {
+  transform: translateX(50%);
+}
+
+.slide-in-right-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 200ms;
+}
+
+.slide-in-right-exit {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.slide-in-right-exit-active {
+  transform: translateX(50%);
+  opacity: 0;
+  transition: all 200ms;
+}

@@ -1,0 +1,51 @@
+.image-icon {
+  font-size: 30vh;
+  text-align: center;
+  margin: 20% auto;
+  color: darkgray;
+}
+
+.card-image-size {
+  width: 50vh;
+  max-width: 100%;
+}
+
+.button-done {
+  margin: auto;
+  display: block;
+  margin: 5% auto;
+  width: 80%;
+  background-color: #404040;
+  border-color: #404040;
+  font-weight: bold;
+}
+
+.button-done:hover {
+  background-color: #ffb266;
+  border-color: #ffb266;
+  font-weight: bold;
+}
+
+.dropdown-type {
+  display: flex;
+  justify-content: center;
+  padding: 100% auto;
+}
+
+.genders-switch {
+  margin: auto 5%;
+  color: #404040;
+  transition: 0.3s;
+}
+
+.genders-picked {
+  margin: auto 5%;
+  font-size: 150%;
+  color: #ffb266;
+}
+
+.genders-switch:hover {
+  color: #ffb266;
+  font-size: 150%;
+  transition: 0.3s;
+}

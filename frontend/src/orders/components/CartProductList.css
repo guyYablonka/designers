@@ -1,0 +1,7 @@
+.procuts-cart {
+  width: 70%;
+  margin: 7rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}

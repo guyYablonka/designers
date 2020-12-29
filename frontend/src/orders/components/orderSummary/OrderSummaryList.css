@@ -1,0 +1,9 @@
+.total-price {
+  bottom: 0;
+  position: absolute;
+}
+
+.scroll-products {
+  height: 38vh;
+  overflow: auto;
+}

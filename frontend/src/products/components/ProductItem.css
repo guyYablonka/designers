@@ -1,0 +1,29 @@
+.product-item {
+  margin: 1rem;
+  width: calc(25% - 2rem);
+  min-width: 17.5rem;
+}
+
+.product-item a {
+  text-decoration: none;
+  margin: 0 0 0.5rem 0;
+  padding: 1rem;
+  color: #404040;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.product-item__image {
+  width: 15rem;
+  height: 15rem;
+  margin: auto;
+}
+
+h2 {
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+  font-size: 200%;
+  color: #404040;
+  -webkit-text-stroke: 0.7px #a0a0a0;
+}

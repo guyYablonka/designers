@@ -1,0 +1,31 @@
+.full-screen {
+  height: 80vh;
+  margin: 0vh 0vh 2vh 0vh;
+}
+
+.half-screen {
+  height: 39vh;
+  margin: 0vh 0vh 2vh 0vh;
+}
+
+.might-like {
+  color: #404040;
+  -webkit-text-stroke: 0.5px #a0a0a0;
+}
+
+.three-quarters-screen {
+  height: 60vh;
+  margin: 0vh 0vh 6vh 0vh;
+}
+
+.order-place {
+  background-color: #404040;
+  border-color: #404040;
+  font-weight: bold;
+}
+
+.order-place:hover {
+  background-color: #ffb266;
+  border-color: #ffb266;
+  font-weight: bold;
+}

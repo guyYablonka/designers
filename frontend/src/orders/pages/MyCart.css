@@ -1,0 +1,41 @@
+.no-products {
+  width: 70%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-buttons {
+  width: 70%;
+  align-self: center;
+}
+
+.title {
+  text-align: center;
+  padding-bottom: 2%;
+}
+
+.bottom {
+  margin-top: 4%;
+}
+
+.go-shopping {
+  background-color: #404040;
+  border-color: #404040;
+}
+
+.go-shopping:hover {
+  background-color: #ffb266;
+  border-color: #ffb266;
+}
+
+.link-shopping,
+.link-shopping:hover {
+  color: white;
+  text-decoration: none;
+}

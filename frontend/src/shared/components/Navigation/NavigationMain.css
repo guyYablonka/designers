@@ -1,0 +1,20 @@
+.main-navigation__menu-btn {
+  background: transparent;
+  display: flex;
+  border-radius: 20%;
+  flex-direction: column;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.head-icon {
+  color: #ffb266;
+  -webkit-text-stroke: 1px #a0a0a0;
+  font-size: 2vw;
+}
+
+@media (max-width: 768px) {
+  .head-icon {
+    font-size: 6vw;
+  }
+}

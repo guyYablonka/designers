@@ -1,0 +1,14 @@
+.filter-input {
+  margin-top: 2%;
+  border: 1px solid #404040;
+  border-radius: 4px;
+}
+
+.search-icon__background {
+  background-color: #404040;
+}
+
+.search-icon {
+  color: #ffb266;
+  -webkit-text-stroke: 0.5px #a0a0a0;
+}
