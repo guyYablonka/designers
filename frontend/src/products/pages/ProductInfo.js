@@ -26,9 +26,11 @@ const ProductInfo = () => {
   const selectedProduct = {
     id: currentProduct.id,
     name: currentProduct.name,
-    gender: gender,
-    size: size,
-    color: productColor,
+    details: {
+      gender: gender,
+      size: size,
+      color: productColor,
+    },
     price: currentProduct.price,
     designer: currentProduct.designer,
     image: currentProduct.image,
@@ -60,6 +62,10 @@ const ProductInfo = () => {
     setGender("Women");
   };
 
+  const validatePropertiesWereSelected = (details = {}) => {
+    return Object.values(details).some((detail) => detail === null);
+  };
+
   return (
     <Container>
       {showAlert && (
@@ -79,6 +85,7 @@ const ProductInfo = () => {
               variant="secondary"
               className="add-cart-button"
               onClick={addToCartHandler}
+              disabled={validatePropertiesWereSelected(selectedProduct.details)}
             >
               I want it!
             </Button>
