@@ -14,7 +14,7 @@ import {
 import { PRODUCTS } from "./FilteredProducts";
 import "./ProductInfo.css";
 
-const ProductInfo = () => {
+const ProductInfo = (props) => {
   const [showAlert, setShowAlert] = useState(false);
   const [size, setSize] = useState(null);
   const [productColor, setProductColor] = useState(null);
@@ -23,6 +23,7 @@ const ProductInfo = () => {
   const currentProduct = PRODUCTS.find(
     (product) => product.id === Number(productId)
   );
+
   const selectedProduct = {
     id: currentProduct.id,
     name: currentProduct.name,
@@ -37,9 +38,31 @@ const ProductInfo = () => {
     rank: currentProduct.rank,
     productType: currentProduct.productType,
   };
+
   const addToCartHandler = () => {
-    console.log(selectedProduct);
     setShowAlert(true);
+    const itemAlreadyInCart = props.cart.find(
+      (item) =>
+        item.id === selectedProduct.id &&
+        haveSameData(item.details, selectedProduct.details)
+    );
+    if (itemAlreadyInCart) {
+      itemAlreadyInCart.amount++;
+    } else {
+      props.cart.push({ ...selectedProduct, amount: 1 });
+    }
+  };
+
+  const haveSameData = (obj1, obj2) => {
+    const obj1Length = Object.keys(obj1).length;
+    const obj2Length = Object.keys(obj2).length;
+
+    if (obj1Length === obj2Length) {
+      return Object.keys(obj1).every(
+        (key) => obj2.hasOwnProperty(key) && obj2[key] === obj1[key]
+      );
+    }
+    return false;
   };
 
   const chooseSizeHandler = (index) => {

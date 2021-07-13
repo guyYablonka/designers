@@ -1,12 +1,11 @@
 import React from "react";
 import { USERS } from "../../users/pages/MyProfile";
 import OrderSummaryList from "../components/orderSummary/OrderSummaryList";
-import { CART } from "../pages/MyCart";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import ShippingAddress from "../components/shippingAddress/ShippingAddress";
 import "./Payment.css";
 
-const Payment = () => {
+const Payment = (props) => {
   const user = USERS.find((user) => user.userId === "u1");
 
   const placeOrder = () => {};
@@ -39,7 +38,7 @@ const Payment = () => {
               <h2>Order Summary</h2>
             </Card.Header>
             <Container>
-              <OrderSummaryList cart={CART} />
+              <OrderSummaryList cart={props.cart} />
             </Container>
           </Card>
           <Button

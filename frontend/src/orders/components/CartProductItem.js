@@ -1,21 +1,13 @@
 import React from "react";
-import { useForm } from "../../shared/hooks/form-hook";
 import { Container, Row, Col } from "react-bootstrap";
-import AuthInput from "../../users/components/AuthInput";
-import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 
 import "./CartProductItem.css";
 
 const CartProductItem = (props) => {
-  const [formState, inputHandler] = useForm(
-    {
-      amount: {
-        value: props.amount,
-        isValid: true,
-      },
-    },
-    false
-  );
+  const detailView = (detail) => {
+    return <h4>{detail}</h4>;
+  };
+
   return (
     <Container>
       <Row>
@@ -32,26 +24,16 @@ const CartProductItem = (props) => {
           </Row>
           <Row md={4}>
             <Col>
-              <h4>{"price: " + props.price + "$"}</h4>
-
-              <h4>{"size: " + props.size}</h4>
+              {detailView(`price: ${props.price}$`)}
+              {detailView(`size: ${props.details.size}`)}
             </Col>
             <Col>
-              <h4>{"gender: " + (props.gender === "M" ? "Men" : "Women")}</h4>
-              <h4>{"color: " + props.color}</h4>
+              {detailView(
+                `gender: ${props.details.gender === "M" ? "Men" : "Women"}`
+              )}
+              {detailView(`color: ${props.details.color}`)}
             </Col>
-            <Col>
-              <h4>amount:</h4>
-              <AuthInput
-                id={"amount"}
-                type={"number"}
-                validators={[VALIDATOR_REQUIRE()]}
-                initialValue={formState.inputs.amount.value}
-                initialValid={formState.inputs.amount.isValid}
-                onInput={inputHandler}
-                error={"amount is not available"}
-              />
-            </Col>
+            <Col>{detailView(`amount: ${props.amount}`)}</Col>
           </Row>
         </Col>
       </Row>

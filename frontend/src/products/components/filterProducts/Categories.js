@@ -5,6 +5,7 @@ import TypeFilter from "./TypeFilter";
 import "./Categories.css";
 
 const Categories = (props) => {
+  console.log(props);
   return (
     <Container>
       <ul className="order-categories">

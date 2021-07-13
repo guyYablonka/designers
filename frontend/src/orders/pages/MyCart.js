@@ -9,22 +9,8 @@ import "./MyCart.css";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 
-export const CART = [
-  {
-    id: "1",
-    image: `https://m.media-amazon.com/images/I/A1vJUKBjc2L._AC_CLa%7C2140%2C2000%7C413ulahCjeL.png%7C0%2C0%2C2140%2C2000%2B0.0%2C0.0%2C2140.0%2C2000.0_SX425._SX._UX._SY._UY_.png`,
-    name: "blue nice shirt",
-    price: 10.99,
-    rank: 4.5,
-    size: "S",
-    gender: "M",
-    color: "blue",
-    amount: 2,
-  },
-];
-
-const MyCart = () => {
-  return CART.length ? (
+const MyCart = (props) => {
+  return props.cart.length ? (
     <Container>
       <Row>
         <Col>
@@ -33,7 +19,7 @@ const MyCart = () => {
         </Col>
       </Row>
       <Row>
-        <CartProductList cartProducts={CART} />
+        <CartProductList cartProducts={props.cart} />
       </Row>
       <Row className="bottom">
         <Col md={{ span: 2, offset: 4 }}>
