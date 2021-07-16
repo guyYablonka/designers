@@ -1,5 +1,6 @@
 .filter-input {
-  margin-top: 2%;
+  width: 66%;
+  margin: auto;
   border: 1px solid #404040;
   border-radius: 4px;
 }

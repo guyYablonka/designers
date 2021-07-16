@@ -22,12 +22,17 @@
   font-weight: bold;
 }
 
-.dropdown {
-  width: 100%;
-  height: 100%;
-  margin: auto 5%;
-}
-
 .center {
   text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-flow: center;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
 }

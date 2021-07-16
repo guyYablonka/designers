@@ -8,6 +8,7 @@ import {
   Form,
   ProgressBar,
 } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 import {
   VALIDATOR_EMAIL,
@@ -21,8 +22,9 @@ import { AuthContext } from "../../shared/context/auth-context";
 import AuthInput from "../components/AuthInput";
 import "./Authenticate.css";
 
-const Authenticate = () => {
+const Authenticate = (props) => {
   const auth = useContext(AuthContext);
+  let history = useHistory();
   const [modeValue, setModeValue] = useState("2");
   const mode = [
     { name: "SIGN-UP", value: "1" },
@@ -92,6 +94,7 @@ const Authenticate = () => {
     event.preventDefault();
     console.log(formState.inputs);
     auth.login();
+    history.push("/");
   };
 
   const switchValidateModeHandler = (event) => {
