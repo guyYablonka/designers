@@ -10,6 +10,7 @@ import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 
 const MyCart = (props) => {
+  console.log(props.cart);
   return props.cart.length ? (
     <Container>
       <Row>

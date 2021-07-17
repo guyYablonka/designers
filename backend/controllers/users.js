@@ -14,27 +14,31 @@ let USERS = [
     registerDate: "12/10/2020",
     image:
       "https://image.cnbcfm.com/api/v1/image/100496736-steve-jobs-march-2011-getty.jpg?v=1513863842&w=1400&h=950",
+    craditCard: {
+      number: "fdfdfdfd",
+      cvv: "123",
+      expiredDate: "12/32",
+    },
   },
 ];
 
 const getAllUsers = (req, res, next) => {
-  if (!USERS) {
+  const users = User.find();
+  if (!users) {
     return next(new HttpError("Could not find users", 404));
   }
-  res.json({ users: USERS });
+  res.json(users);
 };
 
 const getUserById = (req, res, next) => {
   const userId = req.params.userId;
-  const user = USERS.find((user) => {
-    return user.id === userId;
-  });
+  const user = User.findById(userId);
 
   if (!user) {
     return next(new HttpError("Could not find user by this id", 404));
   }
 
-  res.json(user);
+  res.json({ user });
 };
 
 const connectUser = (req, res, next) => {

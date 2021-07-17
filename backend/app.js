@@ -1,10 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 const HttpError = require("./models/http-error");
 const productsRouter = require("./routes/products-routes");
 const usersRouter = require("./routes/users-routes");
+const ordersRouter = require("./routes/orders-routes");
 
 const app = express();
 
@@ -12,6 +14,7 @@ app.use(bodyParser.json());
 
 app.use("/api/products", productsRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/order", ordersRouter);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);
@@ -27,9 +30,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    `mongodb+srv://guy:guy_yablonka@cluster0.9awu5.mongodb.net/products?retryWrites=true&w=majority`
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     app.listen(5000); // start Node + Express server on port 5000
   })
