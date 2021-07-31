@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 app.use("/api/products", productsRouter);
 app.use("/api/users", usersRouter);
-app.use("/api/order", ordersRouter);
+app.use("/api/orders", ordersRouter);
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route", 404);

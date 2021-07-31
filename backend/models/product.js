@@ -10,10 +10,10 @@ const productSchema = new Schema({
     availableColors: { type: Array, required: true },
   },
   price: { type: Number, required: true },
-  designer: { type: String, required: true },
+  designer: { type: mongoose.Types.ObjectId, required: true, ref: "User" },
   rank: { type: Number, required: true },
   image: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String, required: false },
   productType: { type: String, required: true },
   addedDate: { type: Date, required: true },
 });

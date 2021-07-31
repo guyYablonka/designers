@@ -1,35 +1,20 @@
 const uuid = require("uuid/v4");
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
+const User = require("../models/user");
 
-let USERS = [
-  {
-    id: "u1",
-    username: "guy_yablonka",
-    email: "guy@gmail.com",
-    password: "1234",
-    adress: "Petah Tikva, Tor Azahav 35",
-    phone: "0509845887",
-    roles: ["user", "admin", "designer"],
-    registerDate: "12/10/2020",
-    image:
-      "https://image.cnbcfm.com/api/v1/image/100496736-steve-jobs-march-2011-getty.jpg?v=1513863842&w=1400&h=950",
-    craditCard: {
-      number: "fdfdfdfd",
-      cvv: "123",
-      expiredDate: "12/32",
-    },
-    orders: [],
-    products: [],
-  },
-];
-
-const getAllUsers = (req, res, next) => {
-  const users = User.find();
-  if (!users) {
-    return next(new HttpError("Could not find users", 404));
+const getAllUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.find({}, "email and username");
+  } catch (err) {
+    const error = new HttpError(
+      "Fetching users failed, please try again later.",
+      500
+    );
+    return next(error);
   }
-  res.json(users);
+  res.json({ users: users.map((user) => user.toObject()) });
 };
 
 const getUserById = (req, res, next) => {
@@ -91,7 +76,7 @@ const updateUser = (req, res, next) => {
   res.status(200).json({ user: updatedUser });
 };
 
-const signup = (req, res, next) => {
+const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     throw new HttpError("Invalid inputs passed, please check your data.", 422);

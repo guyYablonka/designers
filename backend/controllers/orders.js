@@ -1,7 +1,9 @@
 const uuid = require("uuid/v4");
 const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
+const mongoose = require("mongoose");
 const Order = require("../models/order");
+const User = require("../models/user");
 
 const getOrderById = async (req, res, next) => {
   const orderId = req.params.id;
@@ -34,17 +36,38 @@ const createOrder = async (req, res, next) => {
     );
   }
 
-  const { products, userId, price } = req.body;
+  const { products, userOrder, price } = req.body;
 
   const createdOrder = new Order({
     products,
-    userId,
+    userOrder,
     price,
     date: new Date(),
   });
 
+  let user;
   try {
-    await createdOrder.save();
+    user = await User.findById(userOrder);
+  } catch (err) {
+    const error = new HttpError(
+      "Creating product failed, please try again",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError("Could not find user for Provided id", 404);
+    return next(error);
+  }
+
+  try {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    await createdOrder.save({ session: session });
+    user.orders.push(createdOrder);
+    await user.save({ session: session });
+    await session.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       "Creating product failed, please try again.",
