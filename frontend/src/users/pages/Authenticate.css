@@ -4,10 +4,9 @@
 }
 
 .authentication {
-  width: 90%;
-  max-width: 25rem;
+  width: 40%;
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
@@ -56,7 +55,7 @@
 }
 
 .switch-buttons:active {
-  background-color: #292b2c;
+  background-color: #404040;
 }
 
 .submit-button {

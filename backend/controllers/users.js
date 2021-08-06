@@ -28,12 +28,12 @@ const getUserById = (req, res, next) => {
   res.json({ user });
 };
 
-const connectUser = async (req, res, next) => {
-  const { email, password } = req.body;
+const login = async (req, res, next) => {
+  const { username, password } = req.body;
 
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await User.findOne({ username: username });
   } catch (err) {
     const error = new HttpError(
       "Singing up failed, please try again later.",
@@ -43,7 +43,10 @@ const connectUser = async (req, res, next) => {
   }
 
   if (!existingUser || existingUser.password !== password) {
-    const error = HttpError("Invalid credential could not log you in.", 401);
+    const error = new HttpError(
+      "Invalid credential could not log you in.",
+      401
+    );
     return next(error);
   }
 
@@ -51,7 +54,7 @@ const connectUser = async (req, res, next) => {
 };
 
 const updateUser = (req, res, next) => {
-  const error = validationResult(req);
+  const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     throw new HttpError("Invalid inputs passed, please check your data", 422);
@@ -79,13 +82,15 @@ const updateUser = (req, res, next) => {
 const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new HttpError("Invalid inputs passed, please check your data.", 422);
+    return next(
+      new HttpError("Invalid inputs passed, please check your data.", 422)
+    );
   }
-  const { username, password, email } = req.body;
+  const { username, password, email, address, phone } = req.body;
 
   let existingUser;
   try {
-    existingUser = await User.findOne({ email: email });
+    existingUser = await User.findOne({ username: username });
   } catch (err) {
     const error = new HttpError(
       "Singing up failed, please try again later.",
@@ -102,13 +107,20 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  const createdUser = new User(USERS[0]);
+  const createdUser = new User({
+    username,
+    email,
+    password,
+    address,
+    phone,
+    roles: "user",
+    registerDate: new Date(),
+  });
 
   try {
     await createdUser.save();
   } catch (err) {
     const error = new HttpError("Creating user failed, please try again.", 500);
-
     return next(error);
   }
 
@@ -117,6 +129,6 @@ const signup = async (req, res, next) => {
 
 exports.signup = signup;
 exports.updateUser = updateUser;
-exports.connectUser = connectUser;
+exports.connectUser = login;
 exports.getAllUsers = getAllUsers;
 exports.getUserById = getUserById;
