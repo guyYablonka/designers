@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Categories from "../components/filterProducts/Categories";
 import CarouselAds from "../components/advertisements/CarouselAds";
 import FilterInput from "../components/filterProducts/FilterInput";
 import ProductList from "../components/ProductsList";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 export const PRODUCTS = [
   {
@@ -67,13 +69,39 @@ export const PRODUCTS = [
 const FilteredProducts = () => {
   const [productName, changeProductName] = useState("");
   const [productCategory, changeProductCategory] = useState("");
+  const [allProducts, setAllProducts] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
-  const filterProduct = (productName, productCategory) => {
-    return PRODUCTS.filter(
-      (product) =>
-        product.name.toUpperCase().includes(productName.toUpperCase()) &&
-        product.productType.includes(productCategory)
-    );
+  useEffect(() => {
+    const sendRequest = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch("http://localhost:5000/api/products");
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+
+        setAllProducts(
+          responseData.filter(
+            (product) =>
+              product.name.toUpperCase().includes(productName.toUpperCase()) &&
+              product.productType.includes(productCategory)
+          )
+        );
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        setError(err.message);
+      }
+    };
+    sendRequest();
+  }, []);
+
+  const errorHandler = () => {
+    setError(null);
   };
 
   return (
@@ -86,7 +114,13 @@ const FilteredProducts = () => {
       <FilterInput
         onChange={(event) => changeProductName(event.target.value)}
       />
-      <ProductList items={filterProduct(productName, productCategory)} />
+      <ErrorModal error={error} onClear={errorHandler} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+      {!isLoading && allProducts && <ProductList items={allProducts} />}
     </React.Fragment>
   );
 };

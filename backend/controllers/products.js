@@ -6,7 +6,7 @@ const User = require("../models/user");
 const mongoose = require("mongoose");
 
 const getAllProducts = async (req, res, next) => {
-  const allProducts = Product.find();
+  const allProducts = await Product.find();
   if (!allProducts) {
     return next(new HttpError("Could not find products", 404));
   }

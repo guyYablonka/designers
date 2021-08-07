@@ -99,9 +99,9 @@ const Authenticate = (props) => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     if (isLoginMode()) {
       try {
-        setIsLoading(true);
         const response = await fetch("http://localhost:5000/api/users/login", {
           method: "POST",
           headers: {
@@ -121,13 +121,11 @@ const Authenticate = (props) => {
         auth.login();
         history.push("/");
       } catch (err) {
-        console.log(err);
         setIsLoading(false);
         setError(err.message || "Something went wrong, please try again");
       }
     } else {
       try {
-        setIsLoading(true);
         const response = await fetch("http://localhost:5000/api/users/signup", {
           method: "POST",
           headers: {
@@ -151,7 +149,6 @@ const Authenticate = (props) => {
         auth.login();
         history.push("/");
       } catch (err) {
-        console.log(err);
         setIsLoading(false);
         setError(err.message || "Something went wrong, please try again");
       }

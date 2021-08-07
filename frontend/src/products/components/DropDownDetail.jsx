@@ -11,7 +11,7 @@ const DropDownDetail = (props) => {
           {detailName}
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          {options.map((option) => (
+          {options?.map((option) => (
             <Dropdown.Item
               key={option}
               eventKey={options.indexOf(option)}
