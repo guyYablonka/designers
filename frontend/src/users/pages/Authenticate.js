@@ -19,6 +19,7 @@ import {
   VALIDATOR_NUMBERS,
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import AuthInput from "../components/AuthInput";
 import "./Authenticate.css";
@@ -27,12 +28,12 @@ const Authenticate = (props) => {
   const auth = useContext(AuthContext);
   let history = useHistory();
   const [modeValue, setModeValue] = useState("2");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
   const mode = [
     { name: "SIGN-UP", value: "1" },
     { name: "LOGIN", value: "2" },
   ];
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
   const [formState, inputHandler, setFormData] = useForm(
     {
       username: {
@@ -99,39 +100,30 @@ const Authenticate = (props) => {
 
   const authSubmitHandler = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
     if (isLoginMode()) {
       try {
-        const response = await fetch("http://localhost:5000/api/users/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        await sendRequest(
+          "http://localhost:5000/api/users/login",
+          "POST",
+          JSON.stringify({
             username: formState.inputs.username.value,
             password: formState.inputs.password.value,
           }),
-        });
-
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-        setIsLoading(false);
+          {
+            "Content-Type": "application/json",
+          }
+        );
         auth.login();
         history.push("/");
       } catch (err) {
-        setIsLoading(false);
-        setError(err.message || "Something went wrong, please try again");
+        console.log(err);
       }
     } else {
       try {
-        const response = await fetch("http://localhost:5000/api/users/signup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+        await sendRequest(
+          "http://localhost:5000/api/users/signup",
+          "POST",
+          JSON.stringify({
             username: formState.inputs.username.value,
             password: formState.inputs.password.value,
             confirmPassword: formState.inputs.confirmPassword.value,
@@ -139,18 +131,14 @@ const Authenticate = (props) => {
             address: formState.inputs.address.value,
             phone: formState.inputs.phone.value,
           }),
-        });
-
-        const responseData = await response.json();
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
-        setIsLoading(false);
+          {
+            "Content-Type": "application/json",
+          }
+        );
         auth.login();
         history.push("/");
       } catch (err) {
-        setIsLoading(false);
-        setError(err.message || "Something went wrong, please try again");
+        console.log(err);
       }
     }
   };
@@ -208,13 +196,9 @@ const Authenticate = (props) => {
     }
   }, [setProgressHandler, formState, modeValue]);
 
-  const errorHandler = () => {
-    setError(null);
-  };
-
   return (
     <React.Fragment>
-      <ErrorModal error={error} onClear={errorHandler} />
+      <ErrorModal error={error} onClear={clearError} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner />}
         <ButtonGroup toggle className="switch-buttons">
