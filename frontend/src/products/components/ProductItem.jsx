@@ -7,6 +7,7 @@ import Card from "../../shared/components/UIElements/Card";
 import "./ProductItem.css";
 
 const ProductItem = (props) => {
+  console.log(props);
   const maxNameLength = 15;
   const templateOfName =
     props.name.length > maxNameLength

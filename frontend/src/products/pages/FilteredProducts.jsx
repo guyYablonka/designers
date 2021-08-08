@@ -6,24 +6,20 @@ import FilterInput from "../components/filterProducts/FilterInput";
 import ProductList from "../components/ProductsList";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
 const FilteredProducts = () => {
   const [productName, changeProductName] = useState("");
   const [productCategory, changeProductCategory] = useState("");
   const [allProducts, setAllProducts] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   useEffect(() => {
-    const sendRequest = async () => {
-      setIsLoading(true);
+    const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/products");
-        const responseData = await response.json();
-
-        if (!response.ok) {
-          throw new Error(responseData.message);
-        }
+        const responseData = await sendRequest(
+          "http://localhost:5000/api/products"
+        );
 
         setAllProducts(
           responseData.filter(
@@ -33,16 +29,11 @@ const FilteredProducts = () => {
           )
         );
       } catch (err) {
-        setError(err.message);
+        console.log(err);
       }
-      setIsLoading(false);
     };
-    sendRequest();
-  }, []);
-
-  const errorHandler = () => {
-    setError(null);
-  };
+    fetchProducts();
+  }, [sendRequest]);
 
   return (
     <React.Fragment>
@@ -54,7 +45,7 @@ const FilteredProducts = () => {
       <FilterInput
         onChange={(event) => changeProductName(event.target.value)}
       />
-      <ErrorModal error={error} onClear={errorHandler} />
+      <ErrorModal error={error} onClear={clearError} />
       {isLoading && (
         <div className="center">
           <LoadingSpinner />
