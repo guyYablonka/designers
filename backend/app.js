@@ -27,9 +27,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    `mongodb+srv://guy:guy_yablonka@cluster0.9awu5.mongodb.net/products?retryWrites=true&w=majority`
-  )
+  .connect(process.env.MONGO_URL)
   .then(() => {
     app.listen(5000); // start Node + Express server on port 5000
   })
