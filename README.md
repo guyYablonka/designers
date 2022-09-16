@@ -1,15 +1,5 @@
 # designers
 
-<style>
-  div {
-    text-align: center;
-  }
-
-  #designers {
-    border-radius: 10%
-  }
-</style>
-
 <img id="designers" src="./frontend/public/designers logo.png" width="150"/>
 
 #
